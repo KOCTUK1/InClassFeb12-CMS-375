@@ -21,6 +21,15 @@
 				$password = $_POST["password"];
 
 				$sql = "select * from Users where username = '$username' and password = '$password'";
+				
+				$result = $conn->query($sql);
+
+				if($result->num_rows>0){
+					$message = "Login Successfull"
+				}
+				else{
+					$message = "Login not Successfull"
+				}
 			}
 		?>
 
