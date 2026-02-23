@@ -3,6 +3,7 @@
 	<head>
 		<title>Login</title>
 	</head>
+
 	<body>
 		<h2>Enter User and Pass</h2>
 
@@ -11,8 +12,21 @@
 			Password: <input type = "text" name = "password" required><br><br>\
 			<button type = "submit">Login</button>
 		</form>
+
+		<?php
+			$conn = new mysqli("localhost","root","","SocialMediaDB");
+			$message  = "";
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				$username = $_POST["username"];
+				$password = $_POST["password"];
+
+				$sql = "select * from Users where username = '$username' and password = '$password'";
+			}
+		?>
+
 		<p style = "color:red">
 			<?php echo $message; ?>
 		</p>
 	</body>
+
 </html>
