@@ -4,9 +4,13 @@
 		<title>Login</title>
 	</head>
 
+	<?php
+		$bodyColor = "white";
+	?>
 
-	<body>
-		<h2>Enter User and Pass</h2>
+
+	<body style="background-color: <?php echo $bodyColor; ?>;">
+		<h2 style = "color:blue">Enter User and Pass</h2>
 
 		<form method = "POST">
 			Username: <input type = "text" name = "username" required><br><br>
