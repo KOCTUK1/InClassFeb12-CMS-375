@@ -14,7 +14,7 @@
 		</form>
 
 		<?php
-			$conn = new mysqli("localhost","root","","SocialMediaDB");
+			$conn = new mysqli("localhost", "root","", "SocialMediaDB");
 			$message  = "";
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$username = $_POST["username"];
@@ -25,10 +25,10 @@
 				$result = $conn->query($sql);
 
 				if($result->num_rows>0){
-					$message = "Login Successfull"
+					$message = "Login Successfull";
 				}
 				else{
-					$message = "Login not Successfull"
+					$message = "Login not Successfull";
 				}
 			}
 		?>
