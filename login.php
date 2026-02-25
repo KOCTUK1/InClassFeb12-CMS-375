@@ -4,6 +4,7 @@
 		<title>Login</title>
 	</head>
 
+
 	<body>
 		<h2>Enter User and Pass</h2>
 
@@ -16,19 +17,28 @@
 		<?php
 			$conn = new mysqli("localhost", "root","", "SocialMediaDB");
 			$message  = "";
+
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$username = $_POST["username"];
 				$password = $_POST["password"];
 
-				$sql = "select * from Users where username = '$username' and password = '$password'";
-				
+				$sql = "select password from Users where username = '$username'";
 				$result = $conn->query($sql);
-
-				if($result->num_rows>0){
-					$message = "Login Successfull";
+    
+				if (!$result) {
+					$message = "Database error: " . $conn->error;
 				}
-				else{
-					$message = "Login not Successfull";
+				elseif($result->num_rows > 0) {
+					$row = $result->fetch_assoc();
+					$stored_hash = $row['password'];
+        
+					if(password_verify($password, $stored_hash)) {
+						$message = "Login Successful";
+					} else {
+						$message = "Wrong password";
+					}
+				} else {
+					$message = "User not found";
 				}
 			}
 		?>
