@@ -26,6 +26,21 @@
 				$username = $_POST["username"];
 				$password = $_POST["password"];
 
+
+//function to hash all unhashed data in the database, filtering unhashed data as that which is less than 40 characters
+$sql = "select username, password from Users where password not like '\$2y\$%'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $newHash = password_hash($row["password"], PASSWORD_DEFAULT);
+        $usame = $row["username"];
+        $conn->query("update Users set password = '$newHash' where username = '$usame'");
+    }
+} else {
+    echo "";
+}
+
 				$sql = "select password from Users where username = '$username'";
 				$result = $conn->query($sql);
     
