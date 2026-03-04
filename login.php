@@ -53,6 +53,37 @@ if ($result->num_rows > 0) {
         
 					if(password_verify($password, $stored_hash)) {
 						$message = "Login Successful";
+
+//function to get all of the tabes returned by queries for feb 25 bonus
+//NATURAL JOIN
+$dataResult = $conn->query("select * from Users natural join UserDetails");
+	while ($dataRow = $dataResult->fetch_assoc()) {
+		$natural[] = $dataRow;
+	}
+
+//INNER JOIN
+$dataResult = $conn->query("select * from Users inner join UserDetails on Users.username = UserDetails.username");
+	while ($dataRow = $dataResult->fetch_assoc()) {
+		$inner[] = $dataRow;
+	}
+
+//LEFT JOIN
+$dataResult = $conn->query("select * from Users left join UserDetails on Users.username = UserDetails.username");
+	while ($dataRow = $dataResult->fetch_assoc()) {
+		$left[] = $dataRow;
+	}
+
+//RIGHT JOIN
+$dataResult = $conn->query("select * from Users right join UserDetails on Users.username = UserDetails.username");
+	while ($dataRow = $dataResult->fetch_assoc()) {
+		$right[] = $dataRow;
+	}
+
+//FULL JOIN
+$dataResult = $conn->query("select * from Users left join UserDetails on Users.username = UserDetails.username union select * from Users right join UserDetails on Users.Username = UserDetails.Username");
+	while ($dataRow = $dataResult->fetch_assoc()) {
+		$full[] = $dataRow;
+	}
 					} else {
 						$message = "Wrong password";
 					}
@@ -60,11 +91,150 @@ if ($result->num_rows > 0) {
 					$message = "User not found";
 				}
 			}
+
+
 		?>
 
 		<p style = "color:red">
 			<?php echo $message; ?>
 		</p>
+
+<?php //function to show all of the tables returned by queries for feb 25 bonus ?>
+<?php if (!empty($natural)): ?>
+<?php echo "NATURAL JOIN" ?>
+	<table border="1">
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Created At</th>
+	</tr>
+	
+	<?php foreach ($natural as $row): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($row["username"]); ?></td>
+		<td><?php echo htmlspecialchars($row["password"]); ?></td>
+		<td><?php echo htmlspecialchars($row["full_name"]); ?></td>
+		<td><?php echo htmlspecialchars($row["email"]); ?></td>
+		<td><?php echo htmlspecialchars($row["city"]); ?></td>
+		<td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+		
+	</tr>
+	<?php endforeach; ?>
+
+	</table>
+<?php endif; ?>
+
+<?php if (!empty($inner)): ?>
+<?php echo "INNER JOIN" ?>
+	<table border="1">
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Created At</th>
+	</tr>
+	
+	<?php foreach ($natural as $row): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($row["username"]); ?></td>
+		<td><?php echo htmlspecialchars($row["password"]); ?></td>
+		<td><?php echo htmlspecialchars($row["full_name"]); ?></td>
+		<td><?php echo htmlspecialchars($row["email"]); ?></td>
+		<td><?php echo htmlspecialchars($row["city"]); ?></td>
+		<td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+		
+	</tr>
+	<?php endforeach; ?>
+
+	</table>
+<?php endif; ?>
+
+<?php if (!empty($left)): ?>
+<?php echo "LEFT JOIN" ?>
+	<table border="1">
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Created At</th>
+	</tr>
+	
+	<?php foreach ($natural as $row): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($row["username"]); ?></td>
+		<td><?php echo htmlspecialchars($row["password"]); ?></td>
+		<td><?php echo htmlspecialchars($row["full_name"]); ?></td>
+		<td><?php echo htmlspecialchars($row["email"]); ?></td>
+		<td><?php echo htmlspecialchars($row["city"]); ?></td>
+		<td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+		
+	</tr>
+	<?php endforeach; ?>
+
+	</table>
+<?php endif; ?>
+
+<?php if (!empty($right)): ?>
+<?php echo "RIGHT JOIN" ?>
+	<table border="1">
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Created At</th>
+	</tr>
+	
+	<?php foreach ($natural as $row): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($row["username"]); ?></td>
+		<td><?php echo htmlspecialchars($row["password"]); ?></td>
+		<td><?php echo htmlspecialchars($row["full_name"]); ?></td>
+		<td><?php echo htmlspecialchars($row["email"]); ?></td>
+		<td><?php echo htmlspecialchars($row["city"]); ?></td>
+		<td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+		
+	</tr>
+	<?php endforeach; ?>
+
+	</table>
+<?php endif; ?>
+
+<?php if (!empty($full)): ?>
+<?php echo "FULL JOIN" ?>
+	<table border="1">
+	<tr>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Full Name</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Created At</th>
+	</tr>
+	
+	<?php foreach ($natural as $row): ?>
+	<tr>
+		<td><?php echo htmlspecialchars($row["username"]); ?></td>
+		<td><?php echo htmlspecialchars($row["password"]); ?></td>
+		<td><?php echo htmlspecialchars($row["full_name"]); ?></td>
+		<td><?php echo htmlspecialchars($row["email"]); ?></td>
+		<td><?php echo htmlspecialchars($row["city"]); ?></td>
+		<td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+		
+	</tr>
+	<?php endforeach; ?>
+
+	</table>
+<?php endif; ?>
+
 	</body>
 
 </html>
